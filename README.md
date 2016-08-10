@@ -1,2 +1,7 @@
-# cqlmigrate-example-app
-Example app which uses cqlmigrate
+## Build
+
+    ./gradlew clean shadow
+
+## Start the app
+
+    java -jar build/libs/*.jar server app.yml

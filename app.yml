@@ -1,0 +1,36 @@
+server:
+  applicationConnectors:
+    - type: http
+      port: 8880
+  adminConnectors:
+    - type: http
+      port: 8881
+  requestLog:
+    appenders:
+      - type: console
+  minThreads: 1024
+  maxThreads: 1024
+
+logging:
+  level: INFO
+  loggers:
+      "io.dropwizard": INFO
+      "org.eclipse.jetty": INFO
+      "com.codahale.metrics": INFO
+      "com.netflix.config.sources.URLConfigurationSource": ERROR
+      "com.netflix.hystrix.contrib.metrics.eventstream.HystrixMetricsPoller": ERROR
+      "com.bskyb.mobile.common.clients.SignedRequestBaseClient": WARN
+  appenders:
+    - type: console
+      logFormat: "[%d{ISO8601}] cqlmigrate-example %highlight(%-5level) [%thread] %cyan(%logger{15}) - %msg %n"
+
+cassandra:
+  keyspace: example
+  hosts:
+    - 127.0.0.1
+  port: 9042
+  username: cassandra
+  password: cassandra
+  cqlMigrateResources:
+    - cqlschema/common
+    - cqlschema/dev

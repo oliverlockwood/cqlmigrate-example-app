@@ -1,0 +1,56 @@
+import com.github.jengelman.gradle.plugins.shadow.transformers.ServiceFileTransformer
+
+plugins {
+    id 'java'
+    id 'application'
+    id 'com.github.johnrengelman.shadow' version '1.2.3'
+    id 'maven-publish'
+    id 'pl.allegro.tech.build.axion-release' version '1.3.4'
+}
+
+// axion-release
+project.ext.setProperty('release.disableChecks', 'true')
+project.ext.setProperty('release.pushTagsOnly', 'true')
+scmVersion {
+    tag {
+        prefix = project.name
+    }
+    versionIncrementer 'incrementMinor'
+}
+project.version = scmVersion.version
+
+publishing {
+    publications {
+        shadowJar(MavenPublication) {
+            from components.shadow
+        }
+    }
+}
+
+mainClassName = 'com.oliverlockwood.cqlmigrate.example.ExampleApplication'
+
+shadowJar {
+    baseName = project.name
+    classifier = ''
+
+    exclude 'META-INF/*.DSA'
+    exclude 'META-INF/*.RSA'
+    exclude 'META-INF/*.SF'
+
+    transform(ServiceFileTransformer)
+}
+
+configurations.all {
+    // check for updates every build
+    resolutionStrategy.cacheChangingModulesFor 0, 'minutes'
+}
+
+repositories {
+  jcenter()
+}
+
+dependencies {
+    compile 'io.dropwizard:dropwizard-core:1.0.0'
+    compile 'com.datastax.cassandra:cassandra-driver-core:2.1.10.2'
+    compile 'uk.sky:cqlmigrate:0.9.3'
+}

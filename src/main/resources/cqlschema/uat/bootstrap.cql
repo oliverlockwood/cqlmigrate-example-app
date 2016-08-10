@@ -1,0 +1,1 @@
+CREATE KEYSPACE example WITH replication = {'class': 'NetworkTopologyStrategy', 'DC1': '3'};
