@@ -14,12 +14,8 @@ server:
 logging:
   level: INFO
   loggers:
-      "io.dropwizard": INFO
-      "org.eclipse.jetty": INFO
-      "com.codahale.metrics": INFO
-      "com.netflix.config.sources.URLConfigurationSource": ERROR
-      "com.netflix.hystrix.contrib.metrics.eventstream.HystrixMetricsPoller": ERROR
-      "com.bskyb.mobile.common.clients.SignedRequestBaseClient": WARN
+      "uk.sky.cqlmigrate": INFO
+      "com.datastax.driver": INFO
   appenders:
     - type: console
       logFormat: "[%d{ISO8601}] cqlmigrate-example %highlight(%-5level) [%thread] %cyan(%logger{15}) - %msg %n"
